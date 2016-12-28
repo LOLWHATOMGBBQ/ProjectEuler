@@ -1,34 +1,29 @@
-# we call start from a source x and end at
-# a ending y. We say that x connects to everything
-# in the first column and everything in the last 
-# column connects to y, where all connection have a 
-# a weight of 0. We can then perform djikstras algorithm
-# on the graph, starting from x, going to y.
-
+# uses the same idea as p82
 import heapq, sys
 
 # Input
-sys.stdin = open("Data/p082_matrix.txt", "r")
+sys.stdin = open("Data/p083_matrix.txt", "r")
 size = 80
 mat = [map(int, raw_input().split(",")) for i in xrange(size)]
 
 # the paths stand for:
-paths = [(1, 0), # move right
+paths = [(-1, 0), # move left
+		(1, 0), # move right
 		(0, 1), # move down
 		(0, -1)] # move up
 
-
-Q = [(mat[i][0], (i, 0)) for i in xrange(size)]
+Q = [(mat[0][0], (0, 0)) for i in xrange(size)]
 heapq.heapify(Q)
-
 
 # set up the djikstras and distances
 dists = [[99999999 for i in xrange(size)] for j in xrange(size)]
+dists[0][0] = mat[0][0]
+
 while Q:
 	dist, (y, x) = heapq.heappop(Q)
 	for dx, dy in paths:
 		if 0<= x+dx < size and 0<= y+dy < size:
-			if x+dx == size-1: # reached the end
+			if x+dx == size-1 and y+dy == size-1: # reached the end
 				Q = []
 				print dist + mat[y+dy][x+dx]
 			elif dists[y+dy][x+dx] > dist + mat[y+dy][x+dx]:
