@@ -17,7 +17,8 @@ for i in xrange(len(primes)):
 	prime_sum[i+1] = primes[i] + prime_sum[i]
 
 total = 0
-
+for i in primes:
+	print i
 for i in xrange(len(primes)):
 	for j in xrange(i-total-1, -1, -1):
 		temp = prime_sum[i] = prime_sum[j]
